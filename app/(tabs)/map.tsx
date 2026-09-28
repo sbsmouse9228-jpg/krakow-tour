@@ -4,7 +4,9 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
+import { LanguageToggle } from '@/components/LanguageToggle';
 import { usePlaces } from '@/hooks/usePlaces';
 
 const KRAKOW_REGION = {
@@ -24,6 +26,7 @@ const CATEGORY_PIN_COLOR: Record<string, string> = {
 };
 
 export default function MapScreen() {
+  const { t } = useTranslation();
   const { places, loading } = usePlaces();
   const router = useRouter();
   const mapRef = useRef<MapView>(null);
@@ -85,8 +88,11 @@ export default function MapScreen() {
         )}
       </Pressable>
 
-      <View className="absolute left-4 top-14 rounded-xl bg-white/90 px-3 py-1.5 shadow-sm shadow-black/10">
-        <Text className="text-xs font-medium text-gray-700">크라쿠프 명소 지도</Text>
+      <View className="absolute left-4 top-14 flex-row items-center gap-2">
+        <View className="rounded-xl bg-white/90 px-3 py-1.5 shadow-sm shadow-black/10">
+          <Text className="text-xs font-medium text-gray-700">{t('map.title')}</Text>
+        </View>
+        <LanguageToggle />
       </View>
     </View>
   );

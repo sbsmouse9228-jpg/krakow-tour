@@ -1,7 +1,10 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 export default function TabsLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -13,21 +16,21 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: '명소',
+          title: t('tabs.sights'),
           tabBarIcon: ({ color, size }) => <Ionicons name="location" color={color} size={size} />,
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
-          title: '지도',
+          title: t('tabs.map'),
           tabBarIcon: ({ color, size }) => <Ionicons name="map" color={color} size={size} />,
         }}
       />
       <Tabs.Screen
         name="itineraries"
         options={{
-          title: '추천 일정',
+          title: t('tabs.itineraries'),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" color={color} size={size} />
           ),
@@ -36,7 +39,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="food"
         options={{
-          title: '맛집/카페',
+          title: t('tabs.food'),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="restaurant" color={color} size={size} />
           ),

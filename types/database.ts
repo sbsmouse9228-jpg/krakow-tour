@@ -3,7 +3,7 @@ export type PlaceCategory = 'landmark' | 'museum' | 'church' | 'park' | 'food' |
 export interface Place {
   id: string;
   name: string;
-  name_en: string | null;
+  name_local: string | null;
   category: PlaceCategory;
   description: string | null;
   address: string | null;

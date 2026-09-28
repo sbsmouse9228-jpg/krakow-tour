@@ -1,19 +1,19 @@
 import { ActivityIndicator, FlatList, Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
+import { ScreenHeader } from '@/components/ScreenHeader';
 import { useItineraries } from '@/hooks/useItineraries';
 
 export default function ItinerariesScreen() {
+  const { t } = useTranslation();
   const { itineraries, loading, error } = useItineraries();
   const router = useRouter();
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <View className="px-4 pb-2 pt-4">
-        <Text className="text-2xl font-bold text-gray-900">추천 일정</Text>
-        <Text className="text-sm text-gray-500">여행 일수에 맞는 코스를 선택해보세요</Text>
-      </View>
+      <ScreenHeader title={t('itineraries.title')} subtitle={t('itineraries.subtitle')} />
 
       {loading ? (
         <View className="flex-1 items-center justify-center">
@@ -35,7 +35,7 @@ export default function ItinerariesScreen() {
             >
               <View className="mb-1 self-start rounded-full bg-brand-50 px-2 py-0.5">
                 <Text className="text-xs font-medium text-brand-700">
-                  {item.duration_days}일 코스
+                  {t('itineraries.days', { count: item.duration_days })}
                 </Text>
               </View>
               <Text className="text-lg font-semibold text-gray-900">{item.title}</Text>
@@ -47,7 +47,7 @@ export default function ItinerariesScreen() {
             </Pressable>
           )}
           ListEmptyComponent={
-            <Text className="mt-10 text-center text-gray-400">등록된 일정이 없습니다.</Text>
+            <Text className="mt-10 text-center text-gray-400">{t('itineraries.empty')}</Text>
           }
         />
       )}

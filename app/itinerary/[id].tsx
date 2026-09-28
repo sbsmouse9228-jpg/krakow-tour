@@ -1,10 +1,12 @@
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 import { useItineraryDetail } from '@/hooks/useItineraries';
 import { PlaceCard } from '@/components/PlaceCard';
 
 export default function ItineraryDetailScreen() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { itinerary, loading, error } = useItineraryDetail(id);
 
@@ -19,7 +21,9 @@ export default function ItineraryDetailScreen() {
   if (error || !itinerary) {
     return (
       <View className="flex-1 items-center justify-center bg-white px-6">
-        <Text className="text-center text-red-500">{error ?? '일정을 찾을 수 없습니다.'}</Text>
+        <Text className="text-center text-red-500">
+          {error ?? t('itineraryDetail.notFound')}
+        </Text>
       </View>
     );
   }
@@ -37,7 +41,9 @@ export default function ItineraryDetailScreen() {
 
       {days.map((day) => (
         <View key={day} className="mt-5">
-          <Text className="mb-2 text-lg font-semibold text-brand-700">Day {day}</Text>
+          <Text className="mb-2 text-lg font-semibold text-brand-700">
+            {t('itineraryDetail.day', { number: day })}
+          </Text>
           {itinerary.itinerary_stops
             .filter((stop) => stop.day_number === day)
             .sort((a, b) => a.order_in_day - b.order_in_day)

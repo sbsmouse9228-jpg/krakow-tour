@@ -1,19 +1,12 @@
 import { Image, Pressable, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
-import type { Place, PlaceCategory } from '@/types/database';
-
-const CATEGORY_LABEL: Record<PlaceCategory, string> = {
-  landmark: '명소',
-  museum: '박물관',
-  church: '성당',
-  park: '공원',
-  food: '맛집',
-  cafe: '카페',
-};
+import type { Place } from '@/types/database';
 
 export function PlaceCard({ place }: { place: Place }) {
   const router = useRouter();
+  const { t } = useTranslation();
 
   return (
     <Pressable
@@ -30,7 +23,7 @@ export function PlaceCard({ place }: { place: Place }) {
       <View className="flex-1 justify-center px-3 py-2">
         <View className="mb-1 self-start rounded-full bg-brand-50 px-2 py-0.5">
           <Text className="text-xs font-medium text-brand-700">
-            {CATEGORY_LABEL[place.category]}
+            {t(`category.${place.category}`)}
           </Text>
         </View>
         <Text className="text-base font-semibold text-gray-900" numberOfLines={1}>

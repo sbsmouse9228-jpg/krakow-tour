@@ -1,18 +1,18 @@
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 import { PlaceCard } from '@/components/PlaceCard';
+import { ScreenHeader } from '@/components/ScreenHeader';
 import { usePlaces } from '@/hooks/usePlaces';
 
 export default function FoodScreen() {
+  const { t } = useTranslation();
   const { places, loading, error, refetch } = usePlaces(['food', 'cafe']);
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <View className="px-4 pb-2 pt-4">
-        <Text className="text-2xl font-bold text-gray-900">맛집 &amp; 카페</Text>
-        <Text className="text-sm text-gray-500">현지인이 추천하는 맛집과 카페 목록입니다</Text>
-      </View>
+      <ScreenHeader title={t('food.title')} subtitle={t('food.subtitle')} />
 
       {loading ? (
         <View className="flex-1 items-center justify-center">
@@ -31,9 +31,7 @@ export default function FoodScreen() {
           onRefresh={refetch}
           refreshing={loading}
           ListEmptyComponent={
-            <Text className="mt-10 text-center text-gray-400">
-              등록된 맛집/카페가 없습니다.
-            </Text>
+            <Text className="mt-10 text-center text-gray-400">{t('food.empty')}</Text>
           }
         />
       )}

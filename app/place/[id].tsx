@@ -2,20 +2,14 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import MapView, { Marker } from 'react-native-maps';
+import { useTranslation } from 'react-i18next';
 
+import { LanguageToggle } from '@/components/LanguageToggle';
 import { supabase } from '@/lib/supabase';
-import type { Place, PlaceCategory } from '@/types/database';
-
-const CATEGORY_LABEL: Record<PlaceCategory, string> = {
-  landmark: '명소',
-  museum: '박물관',
-  church: '성당',
-  park: '공원',
-  food: '맛집',
-  cafe: '카페',
-};
+import type { Place } from '@/types/database';
 
 export default function PlaceDetailScreen() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [place, setPlace] = useState<Place | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,7 +39,7 @@ export default function PlaceDetailScreen() {
   if (error || !place) {
     return (
       <View className="flex-1 items-center justify-center bg-white px-6">
-        <Text className="text-center text-red-500">{error ?? '장소를 찾을 수 없습니다.'}</Text>
+        <Text className="text-center text-red-500">{error ?? t('placeDetail.notFound')}</Text>
       </View>
     );
   }
@@ -65,15 +59,21 @@ export default function PlaceDetailScreen() {
         </View>
       )}
 
+      <View className="absolute right-4 top-14">
+        <LanguageToggle />
+      </View>
+
       <View className="px-4 pb-8 pt-4">
         <View className="mb-2 self-start rounded-full bg-brand-50 px-2 py-0.5">
           <Text className="text-xs font-medium text-brand-700">
-            {CATEGORY_LABEL[place.category]}
+            {t(`category.${place.category}`)}
           </Text>
         </View>
 
         <Text className="text-2xl font-bold text-gray-900">{place.name}</Text>
-        {place.name_en ? <Text className="text-sm text-gray-400">{place.name_en}</Text> : null}
+        {place.name_local ? (
+          <Text className="text-sm text-gray-400">{place.name_local}</Text>
+        ) : null}
 
         {place.rating ? (
           <Text className="mt-2 text-sm text-brand-600">⭐ {place.rating.toFixed(1)}</Text>
@@ -115,7 +115,7 @@ export default function PlaceDetailScreen() {
           onPress={openInMaps}
           className="mt-4 items-center rounded-xl bg-brand-500 py-3 active:bg-brand-600"
         >
-          <Text className="font-semibold text-white">지도 앱에서 길찾기</Text>
+          <Text className="font-semibold text-white">{t('placeDetail.openInMaps')}</Text>
         </Pressable>
       </View>
     </ScrollView>

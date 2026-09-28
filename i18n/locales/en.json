@@ -1,0 +1,53 @@
+{
+  "tabs": {
+    "sights": "Sights",
+    "map": "Map",
+    "itineraries": "Itineraries",
+    "food": "Food & Cafes"
+  },
+  "category": {
+    "landmark": "Landmark",
+    "museum": "Museum",
+    "church": "Church",
+    "park": "Park",
+    "food": "Food",
+    "cafe": "Cafe"
+  },
+  "sights": {
+    "title": "Kraków Sights",
+    "subtitle": "Discover the landmarks you shouldn't miss",
+    "empty": "No sights found."
+  },
+  "food": {
+    "title": "Food & Cafes",
+    "subtitle": "Local favorites recommended by locals",
+    "empty": "No food spots or cafes found."
+  },
+  "itineraries": {
+    "title": "Itineraries",
+    "subtitle": "Pick a route that fits your trip length",
+    "days": "{{count}}-day trip",
+    "empty": "No itineraries found."
+  },
+  "itineraryDetail": {
+    "title": "Itinerary",
+    "day": "Day {{number}}",
+    "notFound": "Itinerary not found."
+  },
+  "map": {
+    "title": "Kraków Map"
+  },
+  "placeDetail": {
+    "openInMaps": "Open in Maps",
+    "notFound": "Place not found."
+  },
+  "common": {
+    "error": "Something went wrong.",
+    "loading": "Loading..."
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "ko": "한국어"
+  }
+}
