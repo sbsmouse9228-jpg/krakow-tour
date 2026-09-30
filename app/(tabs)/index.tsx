@@ -7,7 +7,9 @@ import { CategoryFilterChips } from '@/components/CategoryFilterChips';
 import { PlaceCard } from '@/components/PlaceCard';
 import { ScreenHeader } from '@/components/ScreenHeader';
 import { SearchBar } from '@/components/SearchBar';
+import { VisitorBadge } from '@/components/VisitorBadge';
 import { usePlaces } from '@/hooks/usePlaces';
+import { useVisitCounter } from '@/hooks/useVisitCounter';
 import type { PlaceCategory } from '@/types/database';
 import { filterPlaces } from '@/utils/filterPlaces';
 
@@ -18,6 +20,7 @@ export default function SightsScreen() {
   const { places, loading, error, refetch } = usePlaces(SIGHT_CATEGORIES);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<PlaceCategory | 'all'>('all');
+  const visitCount = useVisitCounter();
 
   const filteredPlaces = useMemo(
     () => filterPlaces(places, query, category),
@@ -26,9 +29,15 @@ export default function SightsScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <ScreenHeader title={t('sights.title')} subtitle={t('sights.subtitle')} />
-      <SearchBar value={query} onChangeText={setQuery} />
-      <CategoryFilterChips categories={SIGHT_CATEGORIES} selected={category} onSelect={setCategory} />
+      <View className="bg-gray-50" style={{ zIndex: 10, elevation: 10 }}>
+        <ScreenHeader
+          title={t('sights.title')}
+          subtitle={t('sights.subtitle')}
+          extra={<VisitorBadge count={visitCount} />}
+        />
+        <SearchBar value={query} onChangeText={setQuery} />
+        <CategoryFilterChips categories={SIGHT_CATEGORIES} selected={category} onSelect={setCategory} />
+      </View>
 
       {loading ? (
         <View className="flex-1 items-center justify-center">
@@ -40,10 +49,11 @@ export default function SightsScreen() {
         </View>
       ) : (
         <FlatList
+          style={{ flex: 1 }}
           data={filteredPlaces}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <PlaceCard place={item} />}
-          contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
+          contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 16 }}
           onRefresh={refetch}
           refreshing={loading}
           ListEmptyComponent={
