@@ -26,9 +26,11 @@ export default function FoodScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <ScreenHeader title={t('food.title')} subtitle={t('food.subtitle')} />
-      <SearchBar value={query} onChangeText={setQuery} />
-      <CategoryFilterChips categories={FOOD_CATEGORIES} selected={category} onSelect={setCategory} />
+      <View className="bg-gray-50" style={{ zIndex: 10, elevation: 10 }}>
+        <ScreenHeader title={t('food.title')} subtitle={t('food.subtitle')} />
+        <SearchBar value={query} onChangeText={setQuery} />
+        <CategoryFilterChips categories={FOOD_CATEGORIES} selected={category} onSelect={setCategory} />
+      </View>
 
       {loading ? (
         <View className="flex-1 items-center justify-center">
@@ -40,10 +42,11 @@ export default function FoodScreen() {
         </View>
       ) : (
         <FlatList
+          style={{ flex: 1 }}
           data={filteredPlaces}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <PlaceCard place={item} />}
-          contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}
+          contentContainerStyle={{ paddingHorizontal: 16, paddingTop: 16, paddingBottom: 16 }}
           onRefresh={refetch}
           refreshing={loading}
           ListEmptyComponent={
