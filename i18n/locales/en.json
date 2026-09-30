@@ -3,7 +3,8 @@
     "sights": "Sights",
     "map": "Map",
     "itineraries": "Itineraries",
-    "food": "Food & Cafes"
+    "food": "Food & Cafes",
+    "favorites": "Favorites"
   },
   "category": {
     "landmark": "Landmark",
@@ -37,13 +38,20 @@
   "map": {
     "title": "Kraków Map"
   },
+  "favorites": {
+    "title": "Favorites",
+    "subtitle": "Places you've saved for later",
+    "empty": "No favorites yet. Tap the heart on a place to save it."
+  },
   "placeDetail": {
     "openInMaps": "Open in Maps",
     "notFound": "Place not found."
   },
   "common": {
     "error": "Something went wrong.",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "searchPlaceholder": "Search by name or tag",
+    "all": "All"
   },
   "language": {
     "label": "Language",

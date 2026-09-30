@@ -2,6 +2,7 @@ import { Image, Pressable, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
+import { FavoriteButton } from '@/components/FavoriteButton';
 import type { Place } from '@/types/database';
 
 export function PlaceCard({ place }: { place: Place }) {
@@ -37,6 +38,9 @@ export function PlaceCard({ place }: { place: Place }) {
         {place.rating ? (
           <Text className="mt-1 text-xs text-brand-600">⭐ {place.rating.toFixed(1)}</Text>
         ) : null}
+      </View>
+      <View className="justify-center pr-2">
+        <FavoriteButton placeId={place.id} />
       </View>
     </Pressable>
   );

@@ -1,18 +1,34 @@
+import { useMemo, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
+import { CategoryFilterChips } from '@/components/CategoryFilterChips';
 import { PlaceCard } from '@/components/PlaceCard';
 import { ScreenHeader } from '@/components/ScreenHeader';
+import { SearchBar } from '@/components/SearchBar';
 import { usePlaces } from '@/hooks/usePlaces';
+import type { PlaceCategory } from '@/types/database';
+import { filterPlaces } from '@/utils/filterPlaces';
+
+const FOOD_CATEGORIES: PlaceCategory[] = ['food', 'cafe'];
 
 export default function FoodScreen() {
   const { t } = useTranslation();
-  const { places, loading, error, refetch } = usePlaces(['food', 'cafe']);
+  const { places, loading, error, refetch } = usePlaces(FOOD_CATEGORIES);
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState<PlaceCategory | 'all'>('all');
+
+  const filteredPlaces = useMemo(
+    () => filterPlaces(places, query, category),
+    [places, query, category],
+  );
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
       <ScreenHeader title={t('food.title')} subtitle={t('food.subtitle')} />
+      <SearchBar value={query} onChangeText={setQuery} />
+      <CategoryFilterChips categories={FOOD_CATEGORIES} selected={category} onSelect={setCategory} />
 
       {loading ? (
         <View className="flex-1 items-center justify-center">
@@ -24,7 +40,7 @@ export default function FoodScreen() {
         </View>
       ) : (
         <FlatList
-          data={places}
+          data={filteredPlaces}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <PlaceCard place={item} />}
           contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 16 }}

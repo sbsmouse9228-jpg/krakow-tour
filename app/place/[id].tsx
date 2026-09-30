@@ -4,6 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 import MapView, { Marker } from 'react-native-maps';
 import { useTranslation } from 'react-i18next';
 
+import { FavoriteButton } from '@/components/FavoriteButton';
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { supabase } from '@/lib/supabase';
 import type { Place } from '@/types/database';
@@ -58,6 +59,10 @@ export default function PlaceDetailScreen() {
           <Text className="text-4xl">🏛️</Text>
         </View>
       )}
+
+      <View className="absolute left-4 top-14">
+        <FavoriteButton placeId={place.id} size={22} />
+      </View>
 
       <View className="absolute right-4 top-14">
         <LanguageToggle />
