@@ -20,7 +20,7 @@ export function CategoryFilterChips({
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={{ paddingHorizontal: 16, gap: 8 }}
-      className="mb-2"
+      className="mb-2 h-14"
     >
       {options.map((option) => {
         const isSelected = option === selected;
@@ -28,7 +28,7 @@ export function CategoryFilterChips({
           <Pressable
             key={option}
             onPress={() => onSelect(option)}
-            className={`rounded-full border px-3 py-1.5 ${
+            className={`h-14 items-center justify-center rounded-full border px-4 ${
               isSelected ? 'border-brand-500 bg-brand-500' : 'border-gray-200 bg-white'
             }`}
           >
