@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import MapView, { Marker } from 'react-native-maps';
 import { useTranslation } from 'react-i18next';
 
 import { FavoriteButton } from '@/components/FavoriteButton';
 import { LanguageToggle } from '@/components/LanguageToggle';
+import { PlaceMiniMap } from '@/components/PlaceMiniMap';
 import { supabase } from '@/lib/supabase';
 import type { Place } from '@/types/database';
 
@@ -102,19 +102,7 @@ export default function PlaceDetailScreen() {
           </View>
         ) : null}
 
-        <MapView
-          style={{ height: 180, borderRadius: 16, marginTop: 16 }}
-          initialRegion={{
-            latitude: place.lat,
-            longitude: place.lng,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
-          }}
-          scrollEnabled={false}
-          zoomEnabled={false}
-        >
-          <Marker coordinate={{ latitude: place.lat, longitude: place.lng }} title={place.name} />
-        </MapView>
+        <PlaceMiniMap lat={place.lat} lng={place.lng} title={place.name} />
 
         <Pressable
           onPress={openInMaps}

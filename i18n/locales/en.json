@@ -36,7 +36,8 @@
     "notFound": "Itinerary not found."
   },
   "map": {
-    "title": "Kraków Map"
+    "title": "Kraków Map",
+    "webNotice": "Interactive map is available on the mobile app. Browse all places below."
   },
   "favorites": {
     "title": "Favorites",
@@ -45,7 +46,8 @@
   },
   "placeDetail": {
     "openInMaps": "Open in Maps",
-    "notFound": "Place not found."
+    "notFound": "Place not found.",
+    "mapUnavailableWeb": "Map preview isn't available on web — use Open in Maps below."
   },
   "common": {
     "error": "Something went wrong.",
