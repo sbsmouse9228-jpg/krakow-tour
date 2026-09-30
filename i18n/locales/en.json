@@ -17,7 +17,8 @@
   "sights": {
     "title": "Kraków Sights",
     "subtitle": "Discover the landmarks you shouldn't miss",
-    "empty": "No sights found."
+    "empty": "No sights found.",
+    "visitCount": "{{count}} visits"
   },
   "food": {
     "title": "Food & Cafes",
@@ -47,7 +48,19 @@
   "placeDetail": {
     "openInMaps": "Open in Maps",
     "notFound": "Place not found.",
-    "mapUnavailableWeb": "Map preview isn't available on web — use Open in Maps below."
+    "mapUnavailableWeb": "Map preview isn't available on web — use Open in Maps below.",
+    "leaveFeedback": "Leave Feedback"
+  },
+  "feedback": {
+    "headerTitle": "Feedback",
+    "title": "Leave Feedback",
+    "authorName": "Your Name (optional)",
+    "ratingLabel": "Rating (optional)",
+    "messageLabel": "Message",
+    "validationError": "Please write a message.",
+    "submit": "Submit",
+    "success": "Thanks! Your feedback has been sent.",
+    "emailButton": "Send by Email Instead"
   },
   "common": {
     "error": "Something went wrong.",
@@ -59,5 +72,36 @@
     "label": "Language",
     "en": "English",
     "ko": "한국어"
+  },
+  "admin": {
+    "headerTitle": "Admin",
+    "entryLink": "Admin",
+    "loginTitle": "Admin Login",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "newPlaceTitle": "Add a Place",
+    "validationError": "Name, latitude and longitude are required.",
+    "createSuccess": "Place added successfully.",
+    "submit": "Add Place",
+    "newPlaceTabLabel": "Add Place",
+    "feedbackTabLabel": "Feedback",
+    "feedbackTitle": "User Feedback",
+    "feedbackEmpty": "No feedback yet.",
+    "feedbackUnknownPlace": "Unknown place",
+    "fields": {
+      "name": "Name",
+      "nameLocal": "Local Name",
+      "category": "Category",
+      "description": "Description",
+      "address": "Address",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "imageUrl": "Image URL",
+      "rating": "Rating (0-5)",
+      "priceLevel": "Price Level (1-4)",
+      "tags": "Tags (comma-separated)"
+    }
   }
 }

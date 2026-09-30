@@ -9,6 +9,8 @@
 - **지도 (Map)**: 전체 장소를 지도에 마커로 표시, 카테고리별 핀 색상, 현재 위치로 이동
 - **추천 일정 (Itineraries)**: 일차별로 구성된 추천 코스, 일정 상세에서 경유지 확인
 - **즐겨찾기 (Favorites)**: 장소를 하트 버튼으로 저장하고 즐겨찾기 탭에서 모아보기 (기기 로컬 저장, 로그인 불필요)
+- **의견 남기기 (Feedback)**: 장소 상세 화면에서 별점+메시지로 의견 등록, 이메일로 바로 보내기 버튼도 제공
+- **관리자 (Admin)**: `/admin`에서 Supabase Auth로 로그인 후 새 명소 등록, 받은 피드백 목록 확인
 - **다국어**: 기본 언어 영어, 우측 상단 버튼으로 한국어 전환
 
 ## 기술 스택
@@ -27,8 +29,10 @@ app/                    # Expo Router 라우트 (화면)
   (tabs)/                 - 탭 화면: index(명소), food, map, itineraries, favorites
   place/[id].tsx           - 장소 상세
   itinerary/[id].tsx       - 일정 상세
+  feedback/[placeId].tsx   - 장소별 의견 남기기
+  admin/index.tsx          - 관리자 로그인 + 명소 등록/피드백 확인
 components/             # 재사용 UI 컴포넌트
-contexts/                # 전역 상태 (즐겨찾기 등)
+contexts/                # 전역 상태 (즐겨찾기, 인증 등)
 hooks/                   # 데이터 훅 (usePlaces, useItineraries)
 i18n/                    # 다국어 설정 및 번역 파일
 lib/supabase.ts          # Supabase 클라이언트
@@ -56,7 +60,10 @@ cp .env.example .env
 ```
 EXPO_PUBLIC_SUPABASE_URL=https://xxxxxxxx.supabase.co
 EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+EXPO_PUBLIC_ADMIN_EMAIL=admin@example.com
 ```
+
+`EXPO_PUBLIC_ADMIN_EMAIL`은 장소 상세 화면의 "이메일로 보내기" 버튼이 여는 mailto 링크의 수신 주소입니다.
 
 ### 3. Supabase 스키마 적용
 
@@ -68,6 +75,8 @@ npx supabase db push
 ```
 
 CLI 없이도 각 `.sql` 파일 내용을 Supabase 대시보드의 SQL 에디터에 순서대로 붙여넣어 실행할 수 있습니다.
+
+> 관리자 기능을 쓰려면 Supabase 대시보드 **Authentication → Users**에서 관리자 계정을 직접 생성하세요. 앱 내 회원가입 화면은 없으며, 로그인한 사용자는 누구나 명소 등록 및 피드백 조회 권한을 가집니다.
 
 ### 4. 개발 서버 실행
 

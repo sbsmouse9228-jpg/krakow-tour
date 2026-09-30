@@ -38,3 +38,13 @@ export interface ItineraryStop {
 export interface ItineraryWithStops extends Itinerary {
   itinerary_stops: ItineraryStop[];
 }
+
+export interface Feedback {
+  id: string;
+  place_id: string;
+  author_name: string | null;
+  rating: number | null;
+  message: string;
+  created_at: string;
+  place?: Place;
+}

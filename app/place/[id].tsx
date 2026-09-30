@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Linking, Pressable, ScrollView, Text, View } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
 import { FavoriteButton } from '@/components/FavoriteButton';
@@ -11,6 +12,7 @@ import type { Place } from '@/types/database';
 
 export default function PlaceDetailScreen() {
   const { t } = useTranslation();
+  const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [place, setPlace] = useState<Place | null>(null);
   const [loading, setLoading] = useState(true);
@@ -52,19 +54,32 @@ export default function PlaceDetailScreen() {
 
   return (
     <ScrollView className="flex-1 bg-white">
-      {place.image_url ? (
-        <Image source={{ uri: place.image_url }} className="h-64 w-full" resizeMode="cover" />
-      ) : (
-        <View className="h-40 w-full items-center justify-center bg-brand-100">
-          <Text className="text-4xl">🏛️</Text>
-        </View>
-      )}
-
-      <View className="absolute left-4 top-14">
-        <FavoriteButton placeId={place.id} size={22} />
+      <View className="px-4 pt-4">
+        {place.image_url ? (
+          <Image
+            source={{ uri: place.image_url }}
+            className="h-64 w-full rounded-2xl"
+            resizeMode="cover"
+          />
+        ) : (
+          <View className="h-40 w-full items-center justify-center rounded-2xl bg-brand-100">
+            <Text className="text-4xl">🏛️</Text>
+          </View>
+        )}
       </View>
 
-      <View className="absolute right-4 top-14">
+      <View className="absolute left-4 top-8">
+        <Pressable
+          onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
+          hitSlop={8}
+          className="h-11 w-11 items-center justify-center rounded-full bg-white/90 shadow-sm shadow-black/20"
+        >
+          <Ionicons name="chevron-back" size={26} color="#374151" />
+        </Pressable>
+      </View>
+
+      <View className="absolute right-4 top-8 flex-row items-center gap-2">
+        <FavoriteButton placeId={place.id} size={22} />
         <LanguageToggle />
       </View>
 
@@ -109,6 +124,13 @@ export default function PlaceDetailScreen() {
           className="mt-4 items-center rounded-xl bg-brand-500 py-3 active:bg-brand-600"
         >
           <Text className="font-semibold text-white">{t('placeDetail.openInMaps')}</Text>
+        </Pressable>
+
+        <Pressable
+          onPress={() => router.push(`/feedback/${place.id}`)}
+          className="mt-3 items-center rounded-xl border border-gray-200 py-3 active:bg-gray-50"
+        >
+          <Text className="font-semibold text-gray-700">{t('placeDetail.leaveFeedback')}</Text>
         </Pressable>
       </View>
     </ScrollView>
