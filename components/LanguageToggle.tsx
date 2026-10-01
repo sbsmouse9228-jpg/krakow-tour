@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { setAppLanguage, type AppLanguage } from '@/i18n';
 
 const LANGUAGES: { code: AppLanguage; label: string }[] = [
-  { code: 'en', label: 'English' },
+  { code: 'en', label: 'EN' },
+  { code: 'fr', label: 'FR' },
+  { code: 'de', label: 'DE' },
   { code: 'ko', label: '한국어' },
-  { code: 'de', label: 'Deutsch' },
-  { code: 'fr', label: 'Français' },
 ];
 
 export function LanguageToggle() {
