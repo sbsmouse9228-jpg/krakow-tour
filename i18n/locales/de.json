@@ -1,0 +1,124 @@
+{
+  "tabs": {
+    "sights": "Sehenswürdigkeiten",
+    "map": "Karte",
+    "itineraries": "Reiserouten",
+    "food": "Essen & Cafés",
+    "favorites": "Favoriten"
+  },
+  "category": {
+    "landmark": "Sehenswürdigkeit",
+    "museum": "Museum",
+    "church": "Kirche",
+    "park": "Park",
+    "food": "Essen",
+    "cafe": "Café"
+  },
+  "sights": {
+    "title": "Krakaus Sehenswürdigkeiten",
+    "subtitle": "Entdecke die Wahrzeichen, die du nicht verpassen solltest",
+    "empty": "Keine Sehenswürdigkeiten gefunden.",
+    "visitCount": "{{count}} Besuche"
+  },
+  "food": {
+    "title": "Essen & Cafés",
+    "subtitle": "Lokale Favoriten, empfohlen von Einheimischen",
+    "empty": "Keine Restaurants oder Cafés gefunden."
+  },
+  "itineraries": {
+    "title": "Reiserouten",
+    "subtitle": "Wähle eine Route passend zu deiner Reisedauer",
+    "days": "{{count}}-tägige Reise",
+    "empty": "Keine Reiserouten gefunden."
+  },
+  "itineraryDetail": {
+    "title": "Reiseroute",
+    "day": "Tag {{number}}",
+    "notFound": "Reiseroute nicht gefunden."
+  },
+  "map": {
+    "title": "Krakau-Karte",
+    "webNotice": "Die interaktive Karte ist in der mobilen App verfügbar. Alle Orte findest du unten."
+  },
+  "favorites": {
+    "title": "Favoriten",
+    "subtitle": "Orte, die du gespeichert hast",
+    "empty": "Noch keine Favoriten. Tippe auf das Herz, um einen Ort zu speichern."
+  },
+  "placeDetail": {
+    "openInMaps": "In Karten öffnen",
+    "notFound": "Ort nicht gefunden.",
+    "leaveReview": "Bewertung abgeben",
+    "contactAdmin": "Meinung an Admin senden"
+  },
+  "review": {
+    "headerTitle": "Bewertung schreiben",
+    "title": "Bewertung schreiben",
+    "authorName": "Dein Name (optional)",
+    "ratingLabel": "Bewertung (optional)",
+    "messageLabel": "Nachricht",
+    "validationError": "Bitte schreibe eine Nachricht.",
+    "submit": "Absenden",
+    "success": "Danke! Deine Bewertung wurde veröffentlicht.",
+    "listTitle": "Bewertungen",
+    "empty": "Noch keine Bewertungen.",
+    "anonymous": "Anonym"
+  },
+  "inquiry": {
+    "headerTitle": "Admin kontaktieren",
+    "title": "Meinung an den Administrator senden",
+    "authorName": "Dein Name (optional)",
+    "messageLabel": "Nachricht",
+    "validationError": "Bitte schreibe eine Nachricht.",
+    "submit": "Senden",
+    "success": "Deine Nachricht wurde an den Administrator gesendet."
+  },
+  "common": {
+    "error": "Etwas ist schiefgelaufen.",
+    "loading": "Wird geladen...",
+    "searchPlaceholder": "Nach Name oder Tag suchen",
+    "all": "Alle"
+  },
+  "language": {
+    "label": "Sprache",
+    "en": "English",
+    "ko": "한국어",
+    "de": "Deutsch",
+    "fr": "Français"
+  },
+  "admin": {
+    "headerTitle": "Admin",
+    "entryLink": "Admin",
+    "loginTitle": "Admin-Anmeldung",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "signIn": "Anmelden",
+    "signOut": "Abmelden",
+    "newPlaceTitle": "Ort hinzufügen",
+    "validationError": "Name, Breiten- und Längengrad sind erforderlich.",
+    "createSuccess": "Ort erfolgreich hinzugefügt.",
+    "submit": "Ort hinzufügen",
+    "newPlaceTabLabel": "Ort hinzufügen",
+    "reviewTabLabel": "Bewertungen",
+    "reviewTitle": "Nutzerbewertungen",
+    "reviewEmpty": "Noch keine Bewertungen.",
+    "reviewUnknownPlace": "Unbekannter Ort",
+    "inquiryTabLabel": "Anfragen",
+    "inquiryTitle": "Nutzeranfragen",
+    "inquiryEmpty": "Noch keine Anfragen.",
+    "inquiryUnknownPlace": "Unbekannter Ort",
+    "fields": {
+      "name": "Name",
+      "nameLocal": "Lokaler Name",
+      "category": "Kategorie",
+      "description": "Beschreibung",
+      "address": "Adresse",
+      "lat": "Breitengrad",
+      "lng": "Längengrad",
+      "imageUrl": "Bild-URL",
+      "rating": "Bewertung (0-5)",
+      "priceLevel": "Preisniveau (1-4)",
+      "tags": "Tags (kommagetrennt)"
+    }
+  }
+}

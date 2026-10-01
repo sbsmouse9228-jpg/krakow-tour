@@ -82,7 +82,9 @@
   "language": {
     "label": "언어",
     "en": "English",
-    "ko": "한국어"
+    "ko": "한국어",
+    "de": "Deutsch",
+    "fr": "Français"
   },
   "admin": {
     "headerTitle": "관리자",

@@ -1,0 +1,124 @@
+{
+  "tabs": {
+    "sights": "Sites",
+    "map": "Carte",
+    "itineraries": "Itinéraires",
+    "food": "Restaurants & Cafés",
+    "favorites": "Favoris"
+  },
+  "category": {
+    "landmark": "Site",
+    "museum": "Musée",
+    "church": "Église",
+    "park": "Parc",
+    "food": "Restaurant",
+    "cafe": "Café"
+  },
+  "sights": {
+    "title": "Sites de Cracovie",
+    "subtitle": "Découvrez les incontournables à ne pas manquer",
+    "empty": "Aucun site trouvé.",
+    "visitCount": "{{count}} visites"
+  },
+  "food": {
+    "title": "Restaurants & Cafés",
+    "subtitle": "Les favoris des habitants",
+    "empty": "Aucun restaurant ni café trouvé."
+  },
+  "itineraries": {
+    "title": "Itinéraires",
+    "subtitle": "Choisissez un itinéraire adapté à la durée de votre voyage",
+    "days": "Voyage de {{count}} jour(s)",
+    "empty": "Aucun itinéraire trouvé."
+  },
+  "itineraryDetail": {
+    "title": "Itinéraire",
+    "day": "Jour {{number}}",
+    "notFound": "Itinéraire introuvable."
+  },
+  "map": {
+    "title": "Carte de Cracovie",
+    "webNotice": "La carte interactive est disponible sur l'application mobile. Parcourez tous les lieux ci-dessous."
+  },
+  "favorites": {
+    "title": "Favoris",
+    "subtitle": "Lieux que vous avez enregistrés",
+    "empty": "Pas encore de favoris. Appuyez sur le cœur pour enregistrer un lieu."
+  },
+  "placeDetail": {
+    "openInMaps": "Ouvrir dans Maps",
+    "notFound": "Lieu introuvable.",
+    "leaveReview": "Laisser un avis",
+    "contactAdmin": "Envoyer un avis à l'administrateur"
+  },
+  "review": {
+    "headerTitle": "Rédiger un avis",
+    "title": "Rédiger un avis",
+    "authorName": "Votre nom (facultatif)",
+    "ratingLabel": "Note (facultatif)",
+    "messageLabel": "Message",
+    "validationError": "Veuillez écrire un message.",
+    "submit": "Envoyer",
+    "success": "Merci ! Votre avis a été publié.",
+    "listTitle": "Avis",
+    "empty": "Aucun avis pour le moment.",
+    "anonymous": "Anonyme"
+  },
+  "inquiry": {
+    "headerTitle": "Contacter l'administrateur",
+    "title": "Envoyer un avis à l'administrateur",
+    "authorName": "Votre nom (facultatif)",
+    "messageLabel": "Message",
+    "validationError": "Veuillez écrire un message.",
+    "submit": "Envoyer",
+    "success": "Votre message a été envoyé à l'administrateur."
+  },
+  "common": {
+    "error": "Une erreur est survenue.",
+    "loading": "Chargement...",
+    "searchPlaceholder": "Rechercher par nom ou tag",
+    "all": "Tout"
+  },
+  "language": {
+    "label": "Langue",
+    "en": "English",
+    "ko": "한국어",
+    "de": "Deutsch",
+    "fr": "Français"
+  },
+  "admin": {
+    "headerTitle": "Administration",
+    "entryLink": "Admin",
+    "loginTitle": "Connexion administrateur",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "newPlaceTitle": "Ajouter un lieu",
+    "validationError": "Le nom, la latitude et la longitude sont obligatoires.",
+    "createSuccess": "Lieu ajouté avec succès.",
+    "submit": "Ajouter le lieu",
+    "newPlaceTabLabel": "Ajouter un lieu",
+    "reviewTabLabel": "Avis",
+    "reviewTitle": "Avis des utilisateurs",
+    "reviewEmpty": "Aucun avis pour le moment.",
+    "reviewUnknownPlace": "Lieu inconnu",
+    "inquiryTabLabel": "Messages",
+    "inquiryTitle": "Messages des utilisateurs",
+    "inquiryEmpty": "Aucun message pour le moment.",
+    "inquiryUnknownPlace": "Lieu inconnu",
+    "fields": {
+      "name": "Nom",
+      "nameLocal": "Nom local",
+      "category": "Catégorie",
+      "description": "Description",
+      "address": "Adresse",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "imageUrl": "URL de l'image",
+      "rating": "Note (0-5)",
+      "priceLevel": "Niveau de prix (1-4)",
+      "tags": "Tags (séparés par des virgules)"
+    }
+  }
+}
