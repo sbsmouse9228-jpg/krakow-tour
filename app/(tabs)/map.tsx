@@ -88,7 +88,10 @@ export default function MapScreen() {
         )}
       </Pressable>
 
-      <View className="absolute left-4 top-14 flex-row items-center gap-2">
+      <View
+        className="absolute left-4 top-14 flex-row items-center gap-2"
+        style={{ zIndex: 50, elevation: 50 }}
+      >
         <View className="rounded-xl bg-white/90 px-3 py-1.5 shadow-sm shadow-black/10">
           <Text className="text-xs font-medium text-gray-700">{t('map.title')}</Text>
         </View>

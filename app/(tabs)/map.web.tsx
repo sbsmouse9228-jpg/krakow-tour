@@ -12,7 +12,10 @@ export default function MapScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <View className="flex-row items-start justify-between px-4 pb-2 pt-4">
+      <View
+        className="flex-row items-start justify-between px-4 pb-2 pt-4"
+        style={{ zIndex: 50, elevation: 50 }}
+      >
         <View className="flex-1 pr-3">
           <Text className="text-2xl font-bold text-gray-900">{t('map.title')}</Text>
           <Text className="text-sm text-gray-500">{t('map.webNotice')}</Text>

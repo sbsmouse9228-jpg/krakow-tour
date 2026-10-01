@@ -88,7 +88,10 @@ export default function PlaceDetailScreen() {
         </Pressable>
       </View>
 
-      <View className="absolute right-4 top-8 flex-row items-center gap-2">
+      <View
+        className="absolute right-4 top-8 flex-row items-center gap-2"
+        style={{ zIndex: 100, elevation: 100 }}
+      >
         <FavoriteButton placeId={place.id} size={22} />
         <LanguageToggle />
       </View>

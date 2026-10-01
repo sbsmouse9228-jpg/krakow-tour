@@ -22,7 +22,7 @@ export function LanguageToggle() {
   };
 
   return (
-    <View>
+    <View style={{ zIndex: 100, elevation: 100 }}>
       <Pressable
         onPress={() => setOpen((value) => !value)}
         className="rounded-full border border-brand-200 bg-white px-3 py-1.5 shadow-sm shadow-black/10"
@@ -33,7 +33,10 @@ export function LanguageToggle() {
       </Pressable>
 
       {open ? (
-        <View className="absolute right-0 top-9 z-10 w-32 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-md shadow-black/20">
+        <View
+          style={{ zIndex: 100, elevation: 100 }}
+          className="absolute right-0 top-9 w-32 overflow-hidden rounded-xl border border-gray-100 bg-white py-1 shadow-md shadow-black/20"
+        >
           {LANGUAGES.map((lang) => (
             <Pressable key={lang.code} onPress={() => handleSelect(lang.code)} className="px-3 py-2">
               <Text
