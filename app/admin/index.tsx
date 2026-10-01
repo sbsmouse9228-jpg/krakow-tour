@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { FormField } from '@/components/FormField';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
-import type { Feedback, PlaceCategory } from '@/types/database';
+import type { Review, PlaceCategory } from '@/types/database';
 
 const CATEGORIES: PlaceCategory[] = ['landmark', 'museum', 'church', 'park', 'food', 'cafe'];
 
 export default function AdminScreen() {
   const { session, loading, signIn, signOut } = useAuth();
-  const [tab, setTab] = useState<'newPlace' | 'feedback'>('newPlace');
+  const [tab, setTab] = useState<'newPlace' | 'review'>('newPlace');
 
   if (loading) {
     return (
@@ -95,8 +95,8 @@ function AdminHome({
   onTabChange,
   onSignOut,
 }: {
-  tab: 'newPlace' | 'feedback';
-  onTabChange: (tab: 'newPlace' | 'feedback') => void;
+  tab: 'newPlace' | 'review';
+  onTabChange: (tab: 'newPlace' | 'review') => void;
   onSignOut: () => Promise<void>;
 }) {
   const { t } = useTranslation();
@@ -120,17 +120,17 @@ function AdminHome({
             </Text>
           </Pressable>
           <Pressable
-            onPress={() => onTabChange('feedback')}
+            onPress={() => onTabChange('review')}
             className={`rounded-full border px-3 py-1.5 ${
-              tab === 'feedback' ? 'border-brand-500 bg-brand-500' : 'border-gray-200 bg-white'
+              tab === 'review' ? 'border-brand-500 bg-brand-500' : 'border-gray-200 bg-white'
             }`}
           >
             <Text
               className={`text-xs font-medium ${
-                tab === 'feedback' ? 'text-white' : 'text-gray-600'
+                tab === 'review' ? 'text-white' : 'text-gray-600'
               }`}
             >
-              {t('admin.feedbackTabLabel')}
+              {t('admin.reviewTabLabel')}
             </Text>
           </Pressable>
         </View>
@@ -139,7 +139,7 @@ function AdminHome({
         </Pressable>
       </View>
 
-      {tab === 'newPlace' ? <NewPlaceForm /> : <FeedbackList />}
+      {tab === 'newPlace' ? <NewPlaceForm /> : <ReviewList />}
     </SafeAreaView>
   );
 }
@@ -333,20 +333,20 @@ function NewPlaceForm() {
   );
 }
 
-function FeedbackList() {
+function ReviewList() {
   const { t } = useTranslation();
-  const [feedback, setFeedback] = useState<Feedback[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     supabase
-      .from('feedback')
+      .from('reviews')
       .select('*, place:places(name)')
       .order('created_at', { ascending: false })
       .then(({ data, error: fetchError }) => {
         if (fetchError) setError(fetchError.message);
-        else setFeedback((data as unknown as Feedback[]) ?? []);
+        else setReviews((data as unknown as Review[]) ?? []);
         setLoading(false);
       });
   }, []);
@@ -369,16 +369,16 @@ function FeedbackList() {
 
   return (
     <ScrollView contentContainerStyle={{ padding: 16 }}>
-      <Text className="mb-4 text-2xl font-bold text-gray-900">{t('admin.feedbackTitle')}</Text>
+      <Text className="mb-4 text-2xl font-bold text-gray-900">{t('admin.reviewTitle')}</Text>
 
-      {feedback.length === 0 ? (
-        <Text className="mt-10 text-center text-gray-400">{t('admin.feedbackEmpty')}</Text>
+      {reviews.length === 0 ? (
+        <Text className="mt-10 text-center text-gray-400">{t('admin.reviewEmpty')}</Text>
       ) : (
-        feedback.map((item) => (
+        reviews.map((item) => (
           <View key={item.id} className="mb-3 rounded-2xl bg-gray-50 p-4">
             <View className="mb-1 flex-row items-center justify-between">
               <Text className="text-sm font-semibold text-gray-900">
-                {item.place?.name ?? t('admin.feedbackUnknownPlace')}
+                {item.place?.name ?? t('admin.reviewUnknownPlace')}
               </Text>
               {item.rating ? (
                 <Text className="text-xs text-brand-600">{'⭐'.repeat(item.rating)}</Text>

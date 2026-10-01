@@ -38,8 +38,8 @@ export default function RootLayout() {
                   options={{ headerShown: true, headerTitle: t('admin.headerTitle') }}
                 />
                 <Stack.Screen
-                  name="feedback/[placeId]"
-                  options={{ headerShown: true, headerTitle: t('feedback.headerTitle') }}
+                  name="review/[placeId]"
+                  options={{ headerShown: true, headerTitle: t('review.headerTitle') }}
                 />
               </Stack>
             </View>

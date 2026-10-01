@@ -10,7 +10,7 @@ import type { Place } from '@/types/database';
 
 const RATINGS = [1, 2, 3, 4, 5];
 
-export default function FeedbackScreen() {
+export default function ReviewScreen() {
   const { t } = useTranslation();
   const { placeId } = useLocalSearchParams<{ placeId: string }>();
   const [place, setPlace] = useState<Place | null>(null);
@@ -38,13 +38,13 @@ export default function FeedbackScreen() {
     setStatus(null);
 
     if (!message.trim()) {
-      setStatus({ type: 'error', text: t('feedback.validationError') });
+      setStatus({ type: 'error', text: t('review.validationError') });
       return;
     }
 
     setSubmitting(true);
 
-    const { error } = await supabase.from('feedback').insert({
+    const { error } = await supabase.from('reviews').insert({
       place_id: placeId,
       author_name: authorName.trim() || null,
       rating,
@@ -56,7 +56,7 @@ export default function FeedbackScreen() {
     if (error) {
       setStatus({ type: 'error', text: error.message });
     } else {
-      setStatus({ type: 'success', text: t('feedback.success') });
+      setStatus({ type: 'success', text: t('review.success') });
       setAuthorName('');
       setRating(null);
       setMessage('');
@@ -83,12 +83,12 @@ export default function FeedbackScreen() {
   return (
     <SafeAreaView className="flex-1 bg-white" edges={['top']}>
       <ScrollView contentContainerStyle={{ padding: 16 }}>
-        <Text className="mb-1 text-2xl font-bold text-gray-900">{t('feedback.title')}</Text>
+        <Text className="mb-1 text-2xl font-bold text-gray-900">{t('review.title')}</Text>
         {place ? <Text className="mb-4 text-sm text-gray-500">{place.name}</Text> : null}
 
-        <FormField label={t('feedback.authorName')} value={authorName} onChangeText={setAuthorName} />
+        <FormField label={t('review.authorName')} value={authorName} onChangeText={setAuthorName} />
 
-        <Text className="mb-1 text-sm font-medium text-gray-600">{t('feedback.ratingLabel')}</Text>
+        <Text className="mb-1 text-sm font-medium text-gray-600">{t('review.ratingLabel')}</Text>
         <View className="mb-4 flex-row gap-2">
           {RATINGS.map((value) => (
             <Pressable
@@ -112,7 +112,7 @@ export default function FeedbackScreen() {
         </View>
 
         <FormField
-          label={t('feedback.messageLabel')}
+          label={t('review.messageLabel')}
           value={message}
           onChangeText={setMessage}
           multiline
@@ -133,7 +133,7 @@ export default function FeedbackScreen() {
           {submitting ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text className="font-semibold text-white">{t('feedback.submit')}</Text>
+            <Text className="font-semibold text-white">{t('review.submit')}</Text>
           )}
         </Pressable>
 
@@ -141,7 +141,7 @@ export default function FeedbackScreen() {
           onPress={handleEmail}
           className="items-center rounded-xl border border-gray-200 py-3 active:bg-gray-50"
         >
-          <Text className="font-semibold text-gray-700">{t('feedback.emailButton')}</Text>
+          <Text className="font-semibold text-gray-700">{t('review.emailButton')}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>

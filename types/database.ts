@@ -39,7 +39,7 @@ export interface ItineraryWithStops extends Itinerary {
   itinerary_stops: ItineraryStop[];
 }
 
-export interface Feedback {
+export interface Review {
   id: string;
   place_id: string;
   author_name: string | null;

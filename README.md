@@ -9,8 +9,8 @@
 - **지도 (Map)**: 전체 장소를 지도에 마커로 표시, 카테고리별 핀 색상, 현재 위치로 이동
 - **추천 일정 (Itineraries)**: 일차별로 구성된 추천 코스, 일정 상세에서 경유지 확인
 - **즐겨찾기 (Favorites)**: 장소를 하트 버튼으로 저장하고 즐겨찾기 탭에서 모아보기 (기기 로컬 저장, 로그인 불필요)
-- **의견 남기기 (Feedback)**: 장소 상세 화면에서 별점+메시지로 의견 등록, 이메일로 바로 보내기 버튼도 제공
-- **관리자 (Admin)**: `/admin`에서 Supabase Auth로 로그인 후 새 명소 등록, 받은 피드백 목록 확인
+- **리뷰 (Review)**: 장소 상세 화면에서 별점+메시지로 리뷰 등록, 모든 사용자가 해당 장소의 리뷰를 조회 가능, 이메일로 바로 보내기 버튼도 제공
+- **관리자 (Admin)**: `/admin`에서 Supabase Auth로 로그인 후 새 명소 등록, 받은 리뷰 목록 확인
 - **다국어**: 기본 언어 영어, 우측 상단 버튼으로 한국어 전환
 
 ## 기술 스택
@@ -29,8 +29,8 @@ app/                    # Expo Router 라우트 (화면)
   (tabs)/                 - 탭 화면: index(명소), food, map, itineraries, favorites
   place/[id].tsx           - 장소 상세
   itinerary/[id].tsx       - 일정 상세
-  feedback/[placeId].tsx   - 장소별 의견 남기기
-  admin/index.tsx          - 관리자 로그인 + 명소 등록/피드백 확인
+  review/[placeId].tsx     - 장소별 리뷰 남기기
+  admin/index.tsx          - 관리자 로그인 + 명소 등록/리뷰 확인
 components/             # 재사용 UI 컴포넌트
 contexts/                # 전역 상태 (즐겨찾기, 인증 등)
 hooks/                   # 데이터 훅 (usePlaces, useItineraries)

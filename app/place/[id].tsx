@@ -8,7 +8,7 @@ import { FavoriteButton } from '@/components/FavoriteButton';
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { PlaceMiniMap } from '@/components/PlaceMiniMap';
 import { supabase } from '@/lib/supabase';
-import type { Place } from '@/types/database';
+import type { Place, Review } from '@/types/database';
 
 export default function PlaceDetailScreen() {
   const { t } = useTranslation();
@@ -17,6 +17,7 @@ export default function PlaceDetailScreen() {
   const [place, setPlace] = useState<Place | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     supabase
@@ -29,6 +30,15 @@ export default function PlaceDetailScreen() {
         else setPlace(data);
         setLoading(false);
       });
+  }, [id]);
+
+  useEffect(() => {
+    supabase
+      .from('reviews')
+      .select('*')
+      .eq('place_id', id)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => setReviews(data ?? []));
   }, [id]);
 
   if (loading) {
@@ -127,11 +137,33 @@ export default function PlaceDetailScreen() {
         </Pressable>
 
         <Pressable
-          onPress={() => router.push(`/feedback/${place.id}`)}
+          onPress={() => router.push(`/review/${place.id}`)}
           className="mt-3 items-center rounded-xl border border-gray-200 py-3 active:bg-gray-50"
         >
-          <Text className="font-semibold text-gray-700">{t('placeDetail.leaveFeedback')}</Text>
+          <Text className="font-semibold text-gray-700">{t('placeDetail.leaveReview')}</Text>
         </Pressable>
+
+        <Text className="mb-2 mt-6 text-lg font-bold text-gray-900">{t('review.listTitle')}</Text>
+        {reviews.length === 0 ? (
+          <Text className="text-sm text-gray-400">{t('review.empty')}</Text>
+        ) : (
+          reviews.map((item) => (
+            <View key={item.id} className="mb-3 rounded-2xl bg-gray-50 p-4">
+              <View className="mb-1 flex-row items-center justify-between">
+                <Text className="text-sm font-semibold text-gray-900">
+                  {item.author_name ?? t('review.anonymous')}
+                </Text>
+                {item.rating ? (
+                  <Text className="text-xs text-brand-600">{'⭐'.repeat(item.rating)}</Text>
+                ) : null}
+              </View>
+              <Text className="text-sm text-gray-700">{item.message}</Text>
+              <Text className="mt-2 text-xs text-gray-400">
+                {new Date(item.created_at).toLocaleDateString()}
+              </Text>
+            </View>
+          ))
+        )}
       </View>
     </ScrollView>
   );

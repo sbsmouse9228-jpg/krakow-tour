@@ -48,18 +48,21 @@
   "placeDetail": {
     "openInMaps": "Open in Maps",
     "notFound": "Place not found.",
-    "leaveFeedback": "Leave Feedback"
+    "leaveReview": "Leave a Review"
   },
-  "feedback": {
-    "headerTitle": "Feedback",
-    "title": "Leave Feedback",
+  "review": {
+    "headerTitle": "Write a Review",
+    "title": "Write a Review",
     "authorName": "Your Name (optional)",
     "ratingLabel": "Rating (optional)",
     "messageLabel": "Message",
     "validationError": "Please write a message.",
     "submit": "Submit",
-    "success": "Thanks! Your feedback has been sent.",
-    "emailButton": "Send by Email Instead"
+    "success": "Thanks! Your review has been posted.",
+    "emailButton": "Send by Email Instead",
+    "listTitle": "Reviews",
+    "empty": "No reviews yet.",
+    "anonymous": "Anonymous"
   },
   "common": {
     "error": "Something went wrong.",
@@ -85,10 +88,10 @@
     "createSuccess": "Place added successfully.",
     "submit": "Add Place",
     "newPlaceTabLabel": "Add Place",
-    "feedbackTabLabel": "Feedback",
-    "feedbackTitle": "User Feedback",
-    "feedbackEmpty": "No feedback yet.",
-    "feedbackUnknownPlace": "Unknown place",
+    "reviewTabLabel": "Reviews",
+    "reviewTitle": "User Reviews",
+    "reviewEmpty": "No reviews yet.",
+    "reviewUnknownPlace": "Unknown place",
     "fields": {
       "name": "Name",
       "nameLocal": "Local Name",
