@@ -48,7 +48,6 @@
   "placeDetail": {
     "openInMaps": "Open in Maps",
     "notFound": "Place not found.",
-    "mapUnavailableWeb": "Map preview isn't available on web — use Open in Maps below.",
     "leaveFeedback": "Leave Feedback"
   },
   "feedback": {
