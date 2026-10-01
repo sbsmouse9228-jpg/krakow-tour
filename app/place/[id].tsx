@@ -143,6 +143,13 @@ export default function PlaceDetailScreen() {
           <Text className="font-semibold text-gray-700">{t('placeDetail.leaveReview')}</Text>
         </Pressable>
 
+        <Pressable
+          onPress={() => router.push(`/inquiry/${place.id}`)}
+          className="mt-3 items-center rounded-xl border border-gray-200 py-3 active:bg-gray-50"
+        >
+          <Text className="font-semibold text-gray-700">{t('placeDetail.contactAdmin')}</Text>
+        </Pressable>
+
         <Text className="mb-2 mt-6 text-lg font-bold text-gray-900">{t('review.listTitle')}</Text>
         {reviews.length === 0 ? (
           <Text className="text-sm text-gray-400">{t('review.empty')}</Text>

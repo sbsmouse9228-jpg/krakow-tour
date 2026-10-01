@@ -41,6 +41,10 @@ export default function RootLayout() {
                   name="review/[placeId]"
                   options={{ headerShown: true, headerTitle: t('review.headerTitle') }}
                 />
+                <Stack.Screen
+                  name="inquiry/[placeId]"
+                  options={{ headerShown: true, headerTitle: t('inquiry.headerTitle') }}
+                />
               </Stack>
             </View>
           </View>

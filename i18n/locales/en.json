@@ -48,7 +48,8 @@
   "placeDetail": {
     "openInMaps": "Open in Maps",
     "notFound": "Place not found.",
-    "leaveReview": "Leave a Review"
+    "leaveReview": "Leave a Review",
+    "contactAdmin": "Send Opinion to Admin"
   },
   "review": {
     "headerTitle": "Write a Review",
@@ -59,11 +60,18 @@
     "validationError": "Please write a message.",
     "submit": "Submit",
     "success": "Thanks! Your review has been posted.",
-    "contactAdminButton": "Send Opinion to Admin",
-    "contactAdminSuccess": "Your message has been sent to the admin.",
     "listTitle": "Reviews",
     "empty": "No reviews yet.",
     "anonymous": "Anonymous"
+  },
+  "inquiry": {
+    "headerTitle": "Contact Admin",
+    "title": "Send an Opinion to the Admin",
+    "authorName": "Your Name (optional)",
+    "messageLabel": "Message",
+    "validationError": "Please write a message.",
+    "submit": "Send",
+    "success": "Your message has been sent to the admin."
   },
   "common": {
     "error": "Something went wrong.",

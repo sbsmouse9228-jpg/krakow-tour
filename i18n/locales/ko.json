@@ -48,7 +48,8 @@
   "placeDetail": {
     "openInMaps": "지도 앱에서 길찾기",
     "notFound": "장소를 찾을 수 없습니다.",
-    "leaveReview": "리뷰 남기기"
+    "leaveReview": "리뷰 남기기",
+    "contactAdmin": "관리자에게 의견 보내기"
   },
   "review": {
     "headerTitle": "리뷰 작성",
@@ -59,11 +60,18 @@
     "validationError": "메시지를 입력해주세요.",
     "submit": "등록하기",
     "success": "감사합니다! 리뷰가 등록되었습니다.",
-    "contactAdminButton": "관리자에게 의견 보내기",
-    "contactAdminSuccess": "의견이 관리자에게 전달되었습니다.",
     "listTitle": "리뷰",
     "empty": "아직 작성된 리뷰가 없습니다.",
     "anonymous": "익명"
+  },
+  "inquiry": {
+    "headerTitle": "의견 보내기",
+    "title": "관리자에게 의견 보내기",
+    "authorName": "이름 (선택)",
+    "messageLabel": "메시지",
+    "validationError": "메시지를 입력해주세요.",
+    "submit": "보내기",
+    "success": "의견이 관리자에게 전달되었습니다."
   },
   "common": {
     "error": "문제가 발생했습니다.",

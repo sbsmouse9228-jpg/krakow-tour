@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -8,16 +8,13 @@ import { FormField } from '@/components/FormField';
 import { supabase } from '@/lib/supabase';
 import type { Place } from '@/types/database';
 
-const RATINGS = [1, 2, 3, 4, 5];
-
-export default function ReviewScreen() {
+export default function InquiryScreen() {
   const { t } = useTranslation();
   const { placeId } = useLocalSearchParams<{ placeId: string }>();
   const [place, setPlace] = useState<Place | null>(null);
   const [loadingPlace, setLoadingPlace] = useState(true);
 
   const [authorName, setAuthorName] = useState('');
-  const [rating, setRating] = useState<number | null>(null);
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -38,16 +35,15 @@ export default function ReviewScreen() {
     setStatus(null);
 
     if (!message.trim()) {
-      setStatus({ type: 'error', text: t('review.validationError') });
+      setStatus({ type: 'error', text: t('inquiry.validationError') });
       return;
     }
 
     setSubmitting(true);
 
-    const { error } = await supabase.from('reviews').insert({
+    const { error } = await supabase.from('inquiries').insert({
       place_id: placeId,
       author_name: authorName.trim() || null,
-      rating,
       message: message.trim(),
     });
 
@@ -56,9 +52,8 @@ export default function ReviewScreen() {
     if (error) {
       setStatus({ type: 'error', text: error.message });
     } else {
-      setStatus({ type: 'success', text: t('review.success') });
+      setStatus({ type: 'success', text: t('inquiry.success') });
       setAuthorName('');
-      setRating(null);
       setMessage('');
     }
   };
@@ -74,36 +69,13 @@ export default function ReviewScreen() {
   return (
     <SafeAreaView className="flex-1 bg-white" edges={['top']}>
       <ScrollView contentContainerStyle={{ padding: 16 }}>
-        <Text className="mb-1 text-2xl font-bold text-gray-900">{t('review.title')}</Text>
+        <Text className="mb-1 text-2xl font-bold text-gray-900">{t('inquiry.title')}</Text>
         {place ? <Text className="mb-4 text-sm text-gray-500">{place.name}</Text> : null}
 
-        <FormField label={t('review.authorName')} value={authorName} onChangeText={setAuthorName} />
-
-        <Text className="mb-1 text-sm font-medium text-gray-600">{t('review.ratingLabel')}</Text>
-        <View className="mb-4 flex-row gap-2">
-          {RATINGS.map((value) => (
-            <Pressable
-              key={value}
-              onPress={() => setRating(rating === value ? null : value)}
-              className={`h-10 w-10 items-center justify-center rounded-full border ${
-                rating !== null && value <= rating
-                  ? 'border-brand-500 bg-brand-500'
-                  : 'border-gray-200 bg-white'
-              }`}
-            >
-              <Text
-                className={`text-sm font-medium ${
-                  rating !== null && value <= rating ? 'text-white' : 'text-gray-600'
-                }`}
-              >
-                {value}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
+        <FormField label={t('inquiry.authorName')} value={authorName} onChangeText={setAuthorName} />
 
         <FormField
-          label={t('review.messageLabel')}
+          label={t('inquiry.messageLabel')}
           value={message}
           onChangeText={setMessage}
           multiline
@@ -119,12 +91,12 @@ export default function ReviewScreen() {
         <Pressable
           onPress={handleSubmit}
           disabled={submitting}
-          className="mb-3 items-center rounded-xl bg-brand-500 py-3 active:bg-brand-600 disabled:opacity-50"
+          className="items-center rounded-xl bg-brand-500 py-3 active:bg-brand-600 disabled:opacity-50"
         >
           {submitting ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text className="font-semibold text-white">{t('review.submit')}</Text>
+            <Text className="font-semibold text-white">{t('inquiry.submit')}</Text>
           )}
         </Pressable>
       </ScrollView>
