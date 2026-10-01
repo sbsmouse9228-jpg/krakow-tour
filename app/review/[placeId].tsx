@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Linking, Pressable, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +20,7 @@ export default function ReviewScreen() {
   const [rating, setRating] = useState<number | null>(null);
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [contactSubmitting, setContactSubmitting] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   useEffect(() => {
@@ -63,13 +64,32 @@ export default function ReviewScreen() {
     }
   };
 
-  const handleEmail = () => {
-    const adminEmail = process.env.EXPO_PUBLIC_ADMIN_EMAIL;
-    const subject = encodeURIComponent(`[Kraków Guide] ${place?.name ?? ''}`);
-    const body = encodeURIComponent(
-      `${authorName ? `${authorName}\n` : ''}${rating ? `★${rating}\n` : ''}${message}`,
-    );
-    Linking.openURL(`mailto:${adminEmail}?subject=${subject}&body=${body}`);
+  const handleContactAdmin = async () => {
+    setStatus(null);
+
+    if (!message.trim()) {
+      setStatus({ type: 'error', text: t('review.validationError') });
+      return;
+    }
+
+    setContactSubmitting(true);
+
+    const { error } = await supabase.from('inquiries').insert({
+      place_id: placeId,
+      author_name: authorName.trim() || null,
+      message: message.trim(),
+    });
+
+    setContactSubmitting(false);
+
+    if (error) {
+      setStatus({ type: 'error', text: error.message });
+    } else {
+      setStatus({ type: 'success', text: t('review.contactAdminSuccess') });
+      setAuthorName('');
+      setRating(null);
+      setMessage('');
+    }
   };
 
   if (loadingPlace) {
@@ -138,10 +158,15 @@ export default function ReviewScreen() {
         </Pressable>
 
         <Pressable
-          onPress={handleEmail}
-          className="items-center rounded-xl border border-gray-200 py-3 active:bg-gray-50"
+          onPress={handleContactAdmin}
+          disabled={contactSubmitting}
+          className="items-center rounded-xl border border-gray-200 py-3 active:bg-gray-50 disabled:opacity-50"
         >
-          <Text className="font-semibold text-gray-700">{t('review.emailButton')}</Text>
+          {contactSubmitting ? (
+            <ActivityIndicator color="#374151" />
+          ) : (
+            <Text className="font-semibold text-gray-700">{t('review.contactAdminButton')}</Text>
+          )}
         </Pressable>
       </ScrollView>
     </SafeAreaView>

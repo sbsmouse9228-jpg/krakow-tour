@@ -59,7 +59,8 @@
     "validationError": "Please write a message.",
     "submit": "Submit",
     "success": "Thanks! Your review has been posted.",
-    "emailButton": "Send by Email Instead",
+    "contactAdminButton": "Send Opinion to Admin",
+    "contactAdminSuccess": "Your message has been sent to the admin.",
     "listTitle": "Reviews",
     "empty": "No reviews yet.",
     "anonymous": "Anonymous"
@@ -92,6 +93,10 @@
     "reviewTitle": "User Reviews",
     "reviewEmpty": "No reviews yet.",
     "reviewUnknownPlace": "Unknown place",
+    "inquiryTabLabel": "Inquiries",
+    "inquiryTitle": "User Inquiries",
+    "inquiryEmpty": "No inquiries yet.",
+    "inquiryUnknownPlace": "Unknown place",
     "fields": {
       "name": "Name",
       "nameLocal": "Local Name",

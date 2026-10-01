@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { FormField } from '@/components/FormField';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
-import type { Review, PlaceCategory } from '@/types/database';
+import type { Inquiry, Review, PlaceCategory } from '@/types/database';
 
 const CATEGORIES: PlaceCategory[] = ['landmark', 'museum', 'church', 'park', 'food', 'cafe'];
 
 export default function AdminScreen() {
   const { session, loading, signIn, signOut } = useAuth();
-  const [tab, setTab] = useState<'newPlace' | 'review'>('newPlace');
+  const [tab, setTab] = useState<'newPlace' | 'review' | 'inquiry'>('newPlace');
 
   if (loading) {
     return (
@@ -95,8 +95,8 @@ function AdminHome({
   onTabChange,
   onSignOut,
 }: {
-  tab: 'newPlace' | 'review';
-  onTabChange: (tab: 'newPlace' | 'review') => void;
+  tab: 'newPlace' | 'review' | 'inquiry';
+  onTabChange: (tab: 'newPlace' | 'review' | 'inquiry') => void;
   onSignOut: () => Promise<void>;
 }) {
   const { t } = useTranslation();
@@ -133,13 +133,27 @@ function AdminHome({
               {t('admin.reviewTabLabel')}
             </Text>
           </Pressable>
+          <Pressable
+            onPress={() => onTabChange('inquiry')}
+            className={`rounded-full border px-3 py-1.5 ${
+              tab === 'inquiry' ? 'border-brand-500 bg-brand-500' : 'border-gray-200 bg-white'
+            }`}
+          >
+            <Text
+              className={`text-xs font-medium ${
+                tab === 'inquiry' ? 'text-white' : 'text-gray-600'
+              }`}
+            >
+              {t('admin.inquiryTabLabel')}
+            </Text>
+          </Pressable>
         </View>
         <Pressable onPress={onSignOut}>
           <Text className="text-sm text-brand-600">{t('admin.signOut')}</Text>
         </Pressable>
       </View>
 
-      {tab === 'newPlace' ? <NewPlaceForm /> : <ReviewList />}
+      {tab === 'newPlace' ? <NewPlaceForm /> : tab === 'review' ? <ReviewList /> : <InquiryList />}
     </SafeAreaView>
   );
 }
@@ -384,6 +398,64 @@ function ReviewList() {
                 <Text className="text-xs text-brand-600">{'⭐'.repeat(item.rating)}</Text>
               ) : null}
             </View>
+            <Text className="text-sm text-gray-700">{item.message}</Text>
+            <Text className="mt-2 text-xs text-gray-400">
+              {item.author_name ? `${item.author_name} · ` : ''}
+              {new Date(item.created_at).toLocaleString()}
+            </Text>
+          </View>
+        ))
+      )}
+    </ScrollView>
+  );
+}
+
+function InquiryList() {
+  const { t } = useTranslation();
+  const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    supabase
+      .from('inquiries')
+      .select('*, place:places(name)')
+      .order('created_at', { ascending: false })
+      .then(({ data, error: fetchError }) => {
+        if (fetchError) setError(fetchError.message);
+        else setInquiries((data as unknown as Inquiry[]) ?? []);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <ActivityIndicator color="#c9741f" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View className="flex-1 items-center justify-center px-6">
+        <Text className="text-center text-red-500">{error}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView contentContainerStyle={{ padding: 16 }}>
+      <Text className="mb-4 text-2xl font-bold text-gray-900">{t('admin.inquiryTitle')}</Text>
+
+      {inquiries.length === 0 ? (
+        <Text className="mt-10 text-center text-gray-400">{t('admin.inquiryEmpty')}</Text>
+      ) : (
+        inquiries.map((item) => (
+          <View key={item.id} className="mb-3 rounded-2xl bg-gray-50 p-4">
+            <Text className="mb-1 text-sm font-semibold text-gray-900">
+              {item.place?.name ?? t('admin.inquiryUnknownPlace')}
+            </Text>
             <Text className="text-sm text-gray-700">{item.message}</Text>
             <Text className="mt-2 text-xs text-gray-400">
               {item.author_name ? `${item.author_name} · ` : ''}

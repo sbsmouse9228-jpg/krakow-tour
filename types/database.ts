@@ -48,3 +48,12 @@ export interface Review {
   created_at: string;
   place?: Place;
 }
+
+export interface Inquiry {
+  id: string;
+  place_id: string;
+  author_name: string | null;
+  message: string;
+  created_at: string;
+  place?: Place;
+}

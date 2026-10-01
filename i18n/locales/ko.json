@@ -59,7 +59,8 @@
     "validationError": "메시지를 입력해주세요.",
     "submit": "등록하기",
     "success": "감사합니다! 리뷰가 등록되었습니다.",
-    "emailButton": "이메일로 보내기",
+    "contactAdminButton": "관리자에게 의견 보내기",
+    "contactAdminSuccess": "의견이 관리자에게 전달되었습니다.",
     "listTitle": "리뷰",
     "empty": "아직 작성된 리뷰가 없습니다.",
     "anonymous": "익명"
@@ -92,6 +93,10 @@
     "reviewTitle": "받은 리뷰",
     "reviewEmpty": "아직 등록된 리뷰가 없습니다.",
     "reviewUnknownPlace": "알 수 없는 장소",
+    "inquiryTabLabel": "받은 의견",
+    "inquiryTitle": "받은 의견",
+    "inquiryEmpty": "아직 등록된 의견이 없습니다.",
+    "inquiryUnknownPlace": "알 수 없는 장소",
     "fields": {
       "name": "이름",
       "nameLocal": "현지어 이름",
