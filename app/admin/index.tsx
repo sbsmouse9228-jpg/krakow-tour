@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { FormField } from '@/components/FormField';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
-import type { Inquiry, Review, PlaceCategory } from '@/types/database';
+import type { Inquiry, PendingPlace, Review, PlaceCategory } from '@/types/database';
 
 const CATEGORIES: PlaceCategory[] = ['landmark', 'museum', 'church', 'park', 'food', 'cafe'];
 
 export default function AdminScreen() {
   const { session, loading, signIn, signOut } = useAuth();
-  const [tab, setTab] = useState<'newPlace' | 'review' | 'inquiry'>('newPlace');
+  const [tab, setTab] = useState<'newPlace' | 'pendingPlaces' | 'review' | 'inquiry'>('newPlace');
 
   if (loading) {
     return (
@@ -95,8 +95,8 @@ function AdminHome({
   onTabChange,
   onSignOut,
 }: {
-  tab: 'newPlace' | 'review' | 'inquiry';
-  onTabChange: (tab: 'newPlace' | 'review' | 'inquiry') => void;
+  tab: 'newPlace' | 'pendingPlaces' | 'review' | 'inquiry';
+  onTabChange: (tab: 'newPlace' | 'pendingPlaces' | 'review' | 'inquiry') => void;
   onSignOut: () => Promise<void>;
 }) {
   const { t } = useTranslation();
@@ -104,6 +104,7 @@ function AdminHome({
   return (
     <SafeAreaView className="flex-1 bg-white" edges={['top']}>
       <View className="flex-row items-center justify-between px-4 pt-4">
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-1">
         <View className="flex-row gap-2">
           <Pressable
             onPress={() => onTabChange('newPlace')}
@@ -117,6 +118,20 @@ function AdminHome({
               }`}
             >
               {t('admin.newPlaceTabLabel')}
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => onTabChange('pendingPlaces')}
+            className={`rounded-full border px-3 py-1.5 ${
+              tab === 'pendingPlaces' ? 'border-brand-500 bg-brand-500' : 'border-gray-200 bg-white'
+            }`}
+          >
+            <Text
+              className={`text-xs font-medium ${
+                tab === 'pendingPlaces' ? 'text-white' : 'text-gray-600'
+              }`}
+            >
+              {t('admin.pendingPlacesTabLabel')}
             </Text>
           </Pressable>
           <Pressable
@@ -148,12 +163,21 @@ function AdminHome({
             </Text>
           </Pressable>
         </View>
-        <Pressable onPress={onSignOut}>
+        </ScrollView>
+        <Pressable onPress={onSignOut} className="ml-2">
           <Text className="text-sm text-brand-600">{t('admin.signOut')}</Text>
         </Pressable>
       </View>
 
-      {tab === 'newPlace' ? <NewPlaceForm /> : tab === 'review' ? <ReviewList /> : <InquiryList />}
+      {tab === 'newPlace' ? (
+        <NewPlaceForm />
+      ) : tab === 'pendingPlaces' ? (
+        <PendingPlacesList />
+      ) : tab === 'review' ? (
+        <ReviewList />
+      ) : (
+        <InquiryList />
+      )}
     </SafeAreaView>
   );
 }
@@ -343,6 +367,125 @@ function NewPlaceForm() {
           <Text className="font-semibold text-white">{t('admin.submit')}</Text>
         )}
       </Pressable>
+    </ScrollView>
+  );
+}
+
+function PendingPlacesList() {
+  const { t } = useTranslation();
+  const [items, setItems] = useState<PendingPlace[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [busyId, setBusyId] = useState<string | null>(null);
+
+  const fetchPending = () => {
+    supabase
+      .from('pending_places')
+      .select('*')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false })
+      .then(({ data, error: fetchError }) => {
+        if (fetchError) setError(fetchError.message);
+        else setItems((data as PendingPlace[]) ?? []);
+        setLoading(false);
+      });
+  };
+
+  useEffect(fetchPending, []);
+
+  const handleApprove = async (item: PendingPlace) => {
+    setBusyId(item.id);
+    const { error: insertError } = await supabase.from('places').insert({
+      name: item.name,
+      name_local: item.name_local,
+      category: item.category,
+      description: item.description,
+      address: item.address,
+      lat: item.lat,
+      lng: item.lng,
+      image_url: item.image_url,
+      rating: item.rating,
+      price_level: item.price_level,
+      tags: item.tags,
+    });
+
+    if (insertError) {
+      setError(insertError.message);
+      setBusyId(null);
+      return;
+    }
+
+    const { error: deleteError } = await supabase.from('pending_places').delete().eq('id', item.id);
+    if (deleteError) setError(deleteError.message);
+    setBusyId(null);
+    fetchPending();
+  };
+
+  const handleReject = async (item: PendingPlace) => {
+    setBusyId(item.id);
+    const { error: deleteError } = await supabase.from('pending_places').delete().eq('id', item.id);
+    if (deleteError) setError(deleteError.message);
+    setBusyId(null);
+    fetchPending();
+  };
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <ActivityIndicator color="#c9741f" />
+      </View>
+    );
+  }
+
+  return (
+    <ScrollView contentContainerStyle={{ padding: 16 }}>
+      <Text className="mb-4 text-2xl font-bold text-gray-900">{t('admin.pendingPlacesTitle')}</Text>
+
+      {error ? <Text className="mb-4 text-sm text-red-500">{error}</Text> : null}
+
+      {items.length === 0 ? (
+        <Text className="mt-10 text-center text-gray-400">{t('admin.pendingPlacesEmpty')}</Text>
+      ) : (
+        items.map((item) => (
+          <View key={item.id} className="mb-3 rounded-2xl bg-gray-50 p-4">
+            <View className="mb-1 flex-row items-center justify-between">
+              <Text className="text-sm font-semibold text-gray-900">{item.name}</Text>
+              <Text className="text-xs text-gray-400">{t(`category.${item.category}`)}</Text>
+            </View>
+            {item.description ? (
+              <Text className="mb-1 text-sm text-gray-700">{item.description}</Text>
+            ) : null}
+            {item.address ? <Text className="text-xs text-gray-500">{item.address}</Text> : null}
+            {item.source_notes ? (
+              <Text className="mt-1 text-xs italic text-gray-400">{item.source_notes}</Text>
+            ) : null}
+            <View className="mt-3 flex-row gap-2">
+              <Pressable
+                onPress={() => handleApprove(item)}
+                disabled={busyId === item.id}
+                className="flex-1 items-center rounded-xl bg-brand-500 py-2 active:bg-brand-600 disabled:opacity-50"
+              >
+                {busyId === item.id ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text className="text-sm font-semibold text-white">
+                    {t('admin.pendingPlacesApprove')}
+                  </Text>
+                )}
+              </Pressable>
+              <Pressable
+                onPress={() => handleReject(item)}
+                disabled={busyId === item.id}
+                className="flex-1 items-center rounded-xl border border-gray-200 bg-white py-2 active:bg-gray-100 disabled:opacity-50"
+              >
+                <Text className="text-sm font-semibold text-gray-600">
+                  {t('admin.pendingPlacesReject')}
+                </Text>
+              </Pressable>
+            </View>
+          </View>
+        ))
+      )}
     </ScrollView>
   );
 }

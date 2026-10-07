@@ -16,6 +16,27 @@ export interface Place {
   created_at: string;
 }
 
+export type PendingPlaceStatus = 'pending' | 'rejected';
+
+export interface PendingPlace {
+  id: string;
+  name: string;
+  name_local: string | null;
+  category: PlaceCategory;
+  description: string | null;
+  address: string | null;
+  lat: number;
+  lng: number;
+  image_url: string | null;
+  rating: number | null;
+  price_level: number | null;
+  tags: string[] | null;
+  status: PendingPlaceStatus;
+  source: string;
+  source_notes: string | null;
+  created_at: string;
+}
+
 export interface Itinerary {
   id: string;
   title: string;

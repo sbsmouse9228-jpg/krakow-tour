@@ -12,6 +12,7 @@
 - **리뷰 (Review)**: 장소 상세 화면에서 별점+메시지로 리뷰 등록, 모든 사용자가 해당 장소의 리뷰를 조회 가능
 - **관리자에게 의견 보내기**: 장소 상세 화면에서 관리자에게만 전달되는 비공개 의견/문의 등록 (일반 사용자는 조회 불가)
 - **관리자 (Admin)**: `/admin`에서 Supabase Auth로 로그인 후 새 명소 등록, 받은 리뷰 및 받은 의견 목록 확인
+- **AI 명소 자동 발굴**: GitHub Actions로 주기 실행되는 스크립트(`scripts/discover-places.ts`)가 Claude의 웹 검색 기능으로 신규 명소를 찾아 `pending_places`에 등록. 관리자가 `/admin`의 "AI 추천 명소" 탭에서 승인/거부
 - **다국어**: 기본 언어 영어, 우측 상단 버튼으로 한국어 전환
 
 ## 기술 스택
@@ -98,8 +99,17 @@ npx expo start --web     # 웹 프리뷰
 | `npx tsc --noEmit` | 타입 체크 |
 | `npx expo-doctor` | 의존성/설정 진단 |
 | `npx expo install --fix` | SDK 호환 버전으로 의존성 수정 |
+| `npm run discover-places` | AI가 웹 검색으로 신규 명소를 찾아 `pending_places`에 등록 (로컬 수동 실행용) |
 
 커밋 전 `npx expo lint`와 `npx tsc --noEmit`을 실행해 통과하는지 확인해주세요.
+
+## AI 명소 자동 발굴
+
+`scripts/discover-places.ts`가 Claude API(`claude-opus-5`)의 웹 검색 tool로 크라쿠프의 신규 명소/맛집/카페를 조사하고, 구조화된 출력(JSON Schema)으로 변환해 `pending_places` 테이블에 저장합니다. **바로 사용자에게 노출되지 않고**, `/admin`의 "AI 추천 명소" 탭에서 관리자가 승인해야 `places` 테이블로 옮겨집니다.
+
+- `.github/workflows/discover-places.yml`이 매주 월요일(UTC) 자동 실행하거나, GitHub Actions에서 수동 실행(`workflow_dispatch`) 가능합니다.
+- 필요한 GitHub Secrets: `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`(Supabase 대시보드 → Settings → API), `ANTHROPIC_API_KEY`
+- 로컬에서 테스트하려면 `.env`에 위 3개 값을 채운 뒤 `npm run discover-places` 실행
 
 ## 남은 작업
 
