@@ -1,11 +1,7 @@
 name: Supabase 마이그레이션 배포
 
+# 시크릿(SUPABASE_ACCESS_TOKEN, SUPABASE_DB_PASSWORD) 등록 전까지는 수동 실행만 허용
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'supabase/migrations/**'
   workflow_dispatch:
 
 jobs:
